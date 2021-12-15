@@ -168,13 +168,6 @@ class ConfigEngine(object):
                 print("disable_skin unknown error for skin '%s'" % (options.enable_skin))
             sys.exit(0)
 
-        elif options.disable_skin:
-            print("disable skin '%s'" % options.disable_skin);
-            # check skin exists
-            # check it's not already disabled
-            # disable if needed, saving old weewx.conf
-            sys.exit(0)
-
         else:
             sys.exit("Internal logic error in config.py")
 
