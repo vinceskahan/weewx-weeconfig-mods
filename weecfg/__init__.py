@@ -1551,6 +1551,17 @@ def get_all_skin_infos(config_dict):
 if __name__ == "__main__":
     main()
 
+def get_enable_status(config_dict,skin):
+    skin_info_dict = get_all_skin_infos(config_dict)
+    if skin not in skin_info_dict:
+        enable_status = "invalid_skin_name"
+    else:
+        try:
+            enable_status = to_bool(skin_info_dict[skin]['enable'])
+        except:
+            enable_status = "undefined"
+    return enable_status
+
 def print_skins(config_dict):
     skin_info_dict = get_all_skin_infos(config_dict)
     keys = sorted(skin_info_dict)

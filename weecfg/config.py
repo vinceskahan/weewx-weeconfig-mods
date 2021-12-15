@@ -136,9 +136,36 @@ class ConfigEngine(object):
 
         elif options.enable_skin:
             print("enable skin '%s'" % options.enable_skin);
-            # check skin exists
-            # check it's not already enabled
-            # enable if needed, saving old weewx.conf
+            enable_status = weecfg.get_enable_status(config_dict,options.enable_skin)
+            if enable_status == 'invalid_skin_name':
+                print("invalid skin name '%s' - run '--list-skins' for a list" % options.enable_skin)
+                sys.exit(1)
+            elif enable_status is True:
+                print("skin '%s' is already enabled" % options.enable_skin)
+            elif enable_status is False:
+                print("skin '%s' is disabled - enabling" % options.enable_skin)
+                # enable, saving old weewx.conf
+            elif enable_status == 'undefined':
+                print("skin '%s' enable status is undefined - enabling" % options.enable_skin)
+            else:
+                print("enable_skin unknown error for skin '%s'" % (options.enable_skin))
+            sys.exit(0)
+
+        elif options.disable_skin:
+            print("disable skin '%s'" % options.disable_skin);
+            enable_status = weecfg.get_enable_status(config_dict,options.disable_skin)
+            if enable_status == 'invalid_skin_name':
+                print("invalid skin name '%s' - run '--list-skins' for a list" % options.disable_skin)
+                sys.exit(1)
+            elif enable_status is True:
+                print("skin '%s' is enabled - disabling" % options.disable_skin)
+                # disable, saving old weewx.conf
+            elif enable_status is False:
+                print("skin '%s' is already disabled" % options.disable_skin)
+            elif enable_status == 'undefined':
+                print("skin '%s' enable status is undefined - enabling" % options.disable_skin)
+            else:
+                print("disable_skin unknown error for skin '%s'" % (options.enable_skin))
             sys.exit(0)
 
         elif options.disable_skin:
